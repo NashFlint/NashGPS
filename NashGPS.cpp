@@ -392,7 +392,7 @@ float NashGPS::getSpeed()
     return gpsInfo.speed;
 }
 
-float NashGPS::getAlt()
+double NashGPS::getAlt()
 {
     return gpsInfo.alt;
 }
