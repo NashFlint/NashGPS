@@ -206,10 +206,10 @@ void NashGPS::updateGPGGA()
     
 }
 
-void NashGPS::updateTimeGPGGA(gpsInfo_s* info)
+void NashGPS::updateTimeGPGGA()
 {
     // this is kinda aids but it should be fast and fine, plus its hidden in a nice function
-    info->timeRaw = atof((const char*)bytesGPGGA.time);
+    gpsInfo.timeRaw = atof((const char*)bytesGPGGA.time);
     uint8_t buf[4];
     buf[2] = '\0';
     buf[3] = '\0';
@@ -217,23 +217,23 @@ void NashGPS::updateTimeGPGGA(gpsInfo_s* info)
     // hours
     buf[0] = bytesGPGGA.time[0];
     buf[1] = bytesGPGGA.time[1];
-    info->hours = atoi((const char*)buf);
+    gpsInfo.hours = atoi((const char*)buf);
 
     // minutes
     buf[0] = bytesGPGGA.time[2];
     buf[1] = bytesGPGGA.time[3];
-    info->minutes = atoi((const char*)buf);
+    gpsInfo.minutes = atoi((const char*)buf);
 
     // seconds
     buf[0] = bytesGPGGA.time[4];
     buf[1] = bytesGPGGA.time[5];
-    info->seconds = atoi((const char*)buf);
+    gpsInfo.seconds = atoi((const char*)buf);
 
     // milliseconds
     buf[0] = bytesGPGGA.time[7];
     buf[1] = bytesGPGGA.time[8];
     buf[2] = bytesGPGGA.time[9];
-    info->milliseconds = atoi((const char*)buf);
+    gpsInfo.milliseconds = atoi((const char*)buf);
 }
 
 void NashGPS::parseGPRMC()
@@ -390,6 +390,11 @@ float NashGPS::getSpeed()
 {
     //gpsInfo.updated = false; // going to leave updating info to GPGGA for now until I know more about the behavior
     return gpsInfo.speed;
+}
+
+float NashGPS::getAlt()
+{
+    return gpsInfo.alt;
 }
 
 bool NashGPS::hasFix()
